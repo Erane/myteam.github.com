@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        *,*:after,*:before{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .out{
+            width: 500px;
+            margin: 50px auto;
+            height: 600px;
+            border: 1px solid black;
+            /*overflow: hidden;*/
+        }
+        .inner{
+            height: 100%;
+        }
+        .inner li{
+            width: 100%;
+            height: 20%;
+            border-bottom: 1px dotted black;
+            position: relative;
+        }
+        .a{
+            position: absolute;
+            height: 118px;
+            width: 150%;
+            background: red;
+            top: 0;
+            left: 0;
+            /*left: 100%;*/
+            /*right: 0;*/
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var li=document.querySelectorAll(".inner li");
+            var nac=document.getElementsByClassName("a")[0];
+            var startX;
+            var addEvent = function(obj, type, fn){
+                if(document.addEventListener){
+                    obj.addEventListener(type, fn, false);
+                }
+            }
+            var removeEvent = function(obj, type, fn){
+                if(document.removeEventListener){
+                    obj.removeEventListener(type, fn, false);
+                }
+            }
+
+            var drag={
+                start:function(e){
+                    if(!e.changedTouches){
+                        return
+                    }
+                     startX= e.changedTouches[0].clientX;
+                    addEvent(nac,'touchmove',drag.move);
+                },
+                move:function(e){
+                    var moveX= e.changedTouches[0].clientX;
+                    var speed=0;
+                    if(moveX < startX){
+                        speed--;
+
+                    }else{
+                        speed++;
+                    }
+                    nac.style.left=(nac.offsetLeft) + speed*10 +"px"
+                }
+            }
+            addEvent(document,'touchstart',drag.start)
+        }
+    </script>
+</head>
+<body>
+<div class="out">
+    <ul class="inner">
+        <li>
+            <p>1</p>
+            <div class="a"></div>
+        </li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</div>
+<script>
+</script>
+</body>
+</html>
